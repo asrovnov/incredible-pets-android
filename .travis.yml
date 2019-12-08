@@ -1,0 +1,29 @@
+language: android
+jdk: oraclejdk8
+sudo: required
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-29.0.2
+    - android-29
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+before_install:
+  - yes | sdkmanager "platforms;android-29"
+  - chmod +x gradlew
+
+script:
+  - ./gradlew build check
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
