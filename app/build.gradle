@@ -40,6 +40,7 @@ ext {
     rxBindingVersion = "3.0.0"
     koinVersion = "2.0.1"
     moshiVersion = "1.8.0"
+    conductorVersion = "3.0.0-rc1"
 }
 
 dependencies {
@@ -59,8 +60,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
-    implementation 'androidx.fragment:fragment:1.2.0-rc02'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc02'
+    implementation 'androidx.fragment:fragment:1.2.0-rc03'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc03'
 
     // Rx-libraries
     implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
