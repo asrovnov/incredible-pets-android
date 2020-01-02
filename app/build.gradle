@@ -92,4 +92,7 @@ dependencies {
     // Koin
     implementation "org.koin:koin-core:$koinVersion"
     implementation "org.koin:koin-android:$koinVersion"
+
+    // Logger
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
