@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">incredible-pets-android</string>
+
+    <!-- Main Bottom Bar -->
+    <string name="mbb_tab_dogs">Dogs</string>
+    <string name="mbb_tab_cats">Cats</string>
+
 </resources>

@@ -4,7 +4,8 @@
     <color name="screen_background">@color/white</color>
 
     <color name="bg_splash">@color/white</color>
-
+    <color name="bottom_bar_selected">#00BC57</color>
+    <color name="bottom_bar_inactive">#000000</color>
 
     <color name="black">#000000</color>
     <color name="black_translucent_95">#F2000000</color>

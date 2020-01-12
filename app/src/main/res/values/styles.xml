@@ -14,4 +14,11 @@
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
+
+    <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="itemIconTint">@color/bottom_navigation</item>
+        <item name="itemTextColor">@color/bottom_navigation</item>
+        <item name="itemTextAppearanceActive">@style/Text.BottomNavigation</item>
+        <item name="itemTextAppearanceInactive">@style/Text.BottomNavigation</item>
+    </style>
 </resources>

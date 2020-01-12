@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import me.dmdev.rxpm.base.PmFragment
 
-abstract class BaseScreen<PM : BaseScreenPm> : PmFragment<PM>(), BackButtonHandler {
+abstract class BaseScreen<PM : BasePm> : PmFragment<PM>(), BackButtonHandler {
 
     abstract val screenLayout: Int
 

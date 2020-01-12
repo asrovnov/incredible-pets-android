@@ -6,7 +6,7 @@ import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationalPm
 import ru.app.incredible.pets.BackMessage
 
-abstract class BaseScreenPm : PresentationModel(), NavigationalPm {
+abstract class BasePm : PresentationModel(), NavigationalPm {
 
     open val backAction = action<Unit>()
 
