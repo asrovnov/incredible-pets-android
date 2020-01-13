@@ -5,10 +5,10 @@
     <item
         android:id="@+id/dogs"
         android:icon="@drawable/ic_dog"
-        android:title="@string/mbb_tab_dogs" />
+        android:title="@string/dogs" />
 
     <item
         android:id="@+id/cats"
         android:icon="@drawable/ic_cat"
-        android:title="@string/mbb_tab_cats" />
+        android:title="@string/cats" />
 </menu>
