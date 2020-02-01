@@ -4,8 +4,8 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import ru.app.incredible.pets.di.NetworkModule
-import ru.app.incredible.pets.di.PmModule
+import ru.app.incredible.pets.di.*
+import timber.log.Timber
 
 @Suppress("unused")
 class App : Application() {
@@ -14,6 +14,7 @@ class App : Application() {
         super.onCreate()
 
         initKoin()
+        initLogger()
     }
 
     private fun initKoin() {
@@ -23,10 +24,19 @@ class App : Application() {
         }
     }
 
+    private fun initLogger() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
+
     private fun allModules(): List<Module> {
         return listOf(
-            PmModule.create(),
-            NetworkModule.create()
+            AppModule.create(),
+            NetworkModule.create(),
+            GatewayModule.create(),
+            InteractorModule.create(),
+            PmModule.create()
         )
     }
 }

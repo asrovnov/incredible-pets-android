@@ -8,19 +8,29 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ru.app.incredible.pets.network.DogNetworkConfig
-import ru.app.incredible.pets.network.NetworkConfig
-import ru.app.incredible.pets.network.ServerApi
+import ru.app.incredible.pets.data.backend.DogNetworkConfig
+import ru.app.incredible.pets.data.backend.NetworkConfig
+import ru.app.incredible.pets.data.backend.ServerApi
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
     fun create() = module {
-        single { createApi<ServerApi>(get(), get(), createNetworkConfig().baseUrl) }
+        single {
+            createApi<ServerApi>(
+                client =  createOkHttpClient(),
+                moshi = get(),
+                baseUrl = createNetworkConfig().baseUrl
+            )
+        }
     }
 
-    private inline fun <reified T> createApi(client: OkHttpClient, moshi: Moshi, baseUrl: String): T {
+    private inline fun <reified T> createApi(
+        client: OkHttpClient,
+        moshi: Moshi,
+        baseUrl: String
+    ): T {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)

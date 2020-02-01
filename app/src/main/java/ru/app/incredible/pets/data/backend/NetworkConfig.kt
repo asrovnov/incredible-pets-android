@@ -1,9 +1,9 @@
-package ru.app.incredible.pets.network
+package ru.app.incredible.pets.data.backend
 
 interface NetworkConfig {
     val baseUrl: String
 }
 
 class DogNetworkConfig : NetworkConfig {
-    override val baseUrl = "https://dog.ceo/"
+    override val baseUrl = "https://dog.ceo/api/"
 }
