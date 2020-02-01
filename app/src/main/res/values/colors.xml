@@ -4,8 +4,10 @@
     <color name="screen_background">@color/white</color>
 
     <color name="bg_splash">@color/white</color>
-    <color name="bottom_bar_selected">#00BC57</color>
+    <color name="bottom_bar_selected">@color/secondary</color>
     <color name="bottom_bar_inactive">#000000</color>
+
+    <color name="secondary">#00BC57</color>
 
     <color name="black">#000000</color>
     <color name="black_translucent_95">#F2000000</color>
@@ -17,6 +19,7 @@
     <color name="black_translucent_65">#A6000000</color>
     <color name="black_translucent_60">#99000000</color>
     <color name="black_translucent_55">#8C000000</color>
+    <color name="black_translucent_54">#8A000000</color>
     <color name="black_translucent_50">#80000000</color>
     <color name="black_translucent_45">#A6000000</color>
     <color name="black_translucent_40">#66000000</color>

@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/dogs"
+        android:id="@+id/dog"
         android:icon="@drawable/ic_dog"
-        android:title="@string/dogs" />
+        android:title="@string/dog" />
 
     <item
-        android:id="@+id/cats"
+        android:id="@+id/cat"
         android:icon="@drawable/ic_cat"
-        android:title="@string/cats" />
+        android:title="@string/cat" />
 </menu>

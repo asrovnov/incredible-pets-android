@@ -2,7 +2,8 @@
     <string name="app_name">Pets</string>
 
     <!-- Main Bottom Bar -->
-    <string name="dogs">Dogs</string>
-    <string name="cats">Cats</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="update">Update image</string>
 
 </resources>

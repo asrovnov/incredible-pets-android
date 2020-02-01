@@ -20,6 +20,7 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -95,4 +96,7 @@ dependencies {
 
     // Logger
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
 }

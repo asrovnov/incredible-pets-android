@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Toolbar -->
     <dimen name="toolbar_plus_status_bar_height">81dp</dimen>
     <dimen name="status_bar_height">24dp</dimen>
+
+    <!--Dog and Cat screen -->
+    <dimen name="dog_cat_screen_height_image">400dp</dimen>
+
+    <dimen name="update_image_button_corner_radius">28dp</dimen>
+    <dimen name="update_image_button_height">48dp</dimen>
+
+    <dimen name="big_margin">16dp</dimen>
 
 </resources>
