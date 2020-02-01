@@ -7,8 +7,4 @@ class MainBottomBarPm : BasePm() {
     override fun onCreate() {
         super.onCreate()
     }
-
-    enum class Page(val position: Int) {
-        DOGS(0), CATS(1)
-    }
 }

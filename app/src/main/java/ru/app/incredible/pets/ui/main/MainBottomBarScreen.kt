@@ -6,12 +6,12 @@ import kotlinx.android.synthetic.main.screen_main_bottom_bar.*
 import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationMessageHandler
 import org.koin.android.ext.android.getKoin
-import ru.app.incredible.pets.CatsOpenScreen
-import ru.app.incredible.pets.DogsOpenScreen
+import ru.app.incredible.pets.CatOpenScreen
+import ru.app.incredible.pets.DogOpenScreen
 import ru.app.incredible.pets.R
-import ru.app.incredible.pets.ui.cats.CatsScreen
+import ru.app.incredible.pets.ui.cat.CatScreen
 import ru.app.incredible.pets.ui.common.BaseScreen
-import ru.app.incredible.pets.ui.dogs.DogsScreen
+import ru.app.incredible.pets.ui.dog.DogScreen
 
 class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHandler {
 
@@ -30,9 +30,9 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
 
         bottomNavigation.setOnNavigationItemSelectedListener { tab ->
             when (tab.itemId) {
-                R.id.dogs -> Page.DOGS.ordinal
-                R.id.cats -> Page.CATS.ordinal
-                else -> Page.DOGS.ordinal
+                R.id.dog -> Page.DOG.ordinal
+                R.id.cat -> Page.CAT.ordinal
+                else -> Page.DOG.ordinal
             }.let {
                 viewPager.setCurrentItem(it, true)
             }
@@ -45,7 +45,7 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
         }
     }
 
-    private enum class Page { DOGS, CATS }
+    private enum class Page { DOG, CAT }
 
     private class PageAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
@@ -53,21 +53,21 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
 
         override fun createFragment(position: Int): Fragment {
             return when(Page.values()[position]) {
-                Page.DOGS -> DogsScreen()
-                Page.CATS -> CatsScreen()
+                Page.DOG -> DogScreen()
+                Page.CAT -> CatScreen()
             }
         }
     }
 
     override fun handleNavigationMessage(message: NavigationMessage): Boolean {
         return when (message) {
-            is DogsOpenScreen -> {
-                bottomNavigation.selectedItemId = R.id.dogs
+            is DogOpenScreen -> {
+                bottomNavigation.selectedItemId = R.id.dog
                 true
             }
 
-            is CatsOpenScreen -> {
-                bottomNavigation.selectedItemId = R.id.cats
+            is CatOpenScreen -> {
+                bottomNavigation.selectedItemId = R.id.cat
                 true
             }
 
