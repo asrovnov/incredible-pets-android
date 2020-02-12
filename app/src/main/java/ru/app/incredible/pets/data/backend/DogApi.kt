@@ -4,7 +4,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import ru.app.incredible.pets.data.backend.dto.DogDto
 
-interface ServerApi {
+interface DogApi {
 
     @GET("breeds/image/random")
     fun getRandomDog(): Single<DogDto>

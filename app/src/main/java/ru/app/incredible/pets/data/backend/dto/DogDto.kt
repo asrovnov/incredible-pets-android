@@ -8,7 +8,5 @@ data class DogDto(
     @Json(name = "status") val status: String
 ) : DtoToEntityMapper<Dog> {
 
-    override fun toEntity(): Dog {
-        return Dog(message, status)
-    }
+    override fun toEntity() = Dog(message, status)
 }

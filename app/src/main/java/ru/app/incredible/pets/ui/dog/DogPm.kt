@@ -26,7 +26,7 @@ class DogPm(
         randomDog()
             .subscribe(
                 {
-                    dogImageUrl.consumer.accept(it?.dogImageUrl)
+                    dogImageUrl.consumer.accept(it.dogImageUrl)
                 },
                 {
                     Timber.d("!! error: $it")
@@ -40,7 +40,7 @@ class DogPm(
             }
             .subscribe(
                 {
-                    dogImageUrl.consumer.accept(it?.dogImageUrl)
+                    dogImageUrl.consumer.accept(it.dogImageUrl)
                 },
                 {
                     Timber.tag("!!").d("error: $it")
