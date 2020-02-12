@@ -8,9 +8,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ru.app.incredible.pets.data.backend.DogNetworkConfig
-import ru.app.incredible.pets.data.backend.NetworkConfig
-import ru.app.incredible.pets.data.backend.ServerApi
+import ru.app.incredible.pets.BuildConfig
+import ru.app.incredible.pets.data.backend.CatApi
+import ru.app.incredible.pets.data.backend.DogApi
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -18,10 +18,18 @@ object NetworkModule {
 
     fun create() = module {
         single {
-            createApi<ServerApi>(
+            createApi<DogApi>(
                 client =  createOkHttpClient(),
                 moshi = get(),
-                baseUrl = createNetworkConfig().baseUrl
+                baseUrl = BuildConfig.DOG_BASE_URL
+            )
+        }
+
+        single {
+            createApi<CatApi>(
+                client = createOkHttpClient(),
+                moshi = get(),
+                baseUrl = BuildConfig.CAT_BASE_URL
             )
         }
     }
@@ -56,9 +64,5 @@ object NetworkModule {
         }.apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-    }
-
-    private fun createNetworkConfig(): NetworkConfig {
-        return DogNetworkConfig()
     }
 }

@@ -16,6 +16,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "DOG_BASE_URL", '"https://dog.ceo/api/"'
+        buildConfigField "String", "CAT_BASE_URL", '"https://aws.random.cat/"'
     }
 
     buildTypes {

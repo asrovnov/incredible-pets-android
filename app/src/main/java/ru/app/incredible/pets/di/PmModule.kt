@@ -10,6 +10,6 @@ object PmModule {
     fun create() = module {
         factory { MainBottomBarPm() }
         factory { DogPm(get()) }
-        factory { CatPm() }
+        factory { CatPm(get()) }
     }
 }

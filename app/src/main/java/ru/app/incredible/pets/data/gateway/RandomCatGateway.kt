@@ -3,16 +3,16 @@ package ru.app.incredible.pets.data.gateway
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.app.incredible.pets.data.backend.DogApi
+import ru.app.incredible.pets.data.backend.CatApi
 import ru.app.incredible.pets.data.backend.mapToEntity
-import ru.app.incredible.pets.domain.Dog
+import ru.app.incredible.pets.domain.Cat
 
-class RandomDogGateway(
-    private val api: DogApi
+class RandomCatGateway(
+    private val api: CatApi
 ) {
 
-    fun getRandomDog(): Single<Dog> {
-        return api.getRandomDog()
+    fun getRandomCat(): Single<Cat> {
+        return api.getRandomCat()
             .mapToEntity()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
