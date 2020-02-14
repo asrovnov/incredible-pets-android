@@ -35,9 +35,8 @@ class CatPm(
             .untilDestroy()
 
         updateImageButtonClicks.observable
-            .flatMapSingle {
-                randomCat()
-            }
+            .flatMapSingle { randomCat() }
+            .retry()
             .subscribe(
                 {
                     catImageUrl.consumer.accept(it.catImageUrl)

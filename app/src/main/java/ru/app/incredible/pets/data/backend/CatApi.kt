@@ -6,6 +6,6 @@ import ru.app.incredible.pets.data.backend.dto.CatDto
 
 interface CatApi {
 
-    @GET("meow")
-    fun getRandomCat(): Single<CatDto>
+    @GET("images/search")
+    fun getRandomCat(): Single<List<CatDto>>
 }

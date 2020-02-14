@@ -13,6 +13,7 @@ class RandomCatGateway(
 
     fun getRandomCat(): Single<Cat> {
         return api.getRandomCat()
+            .map { it.first() }
             .mapToEntity()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

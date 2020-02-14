@@ -35,9 +35,8 @@ class DogPm(
             .untilDestroy()
 
         updateImageButtonClicks.observable
-            .flatMapSingle {
-                randomDog()
-            }
+            .flatMapSingle { randomDog() }
+            .retry()
             .subscribe(
                 {
                     dogImageUrl.consumer.accept(it.dogImageUrl)
