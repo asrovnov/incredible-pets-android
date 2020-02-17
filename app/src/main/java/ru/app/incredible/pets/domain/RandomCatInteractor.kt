@@ -1,10 +1,25 @@
 package ru.app.incredible.pets.domain
 
+import io.reactivex.Single
+import ru.app.incredible.pets.data.gateway.NetworkStateGateway
 import ru.app.incredible.pets.data.gateway.RandomCatGateway
+import ru.app.incredible.pets.domain.exceptions.InternetUnavailableException
 
 class RandomCatInteractor(
+    private val networkStateGateway: NetworkStateGateway,
     private val randomCatGateway: RandomCatGateway
 ) {
 
-    fun execute() = randomCatGateway.getRandomCat()
+    fun execute(): Single<Cat> {
+        return networkStateGateway
+            .isNetworkEnabled()
+            .firstOrError()
+            .flatMap {
+                if (it) {
+                    randomCatGateway.getRandomCat()
+                } else {
+                    Single.error(InternetUnavailableException())
+                }
+            }
+    }
 }

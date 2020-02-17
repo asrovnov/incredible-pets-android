@@ -6,10 +6,12 @@ import me.dmdev.rxpm.bindProgress
 import me.dmdev.rxpm.state
 import ru.app.incredible.pets.domain.Cat
 import ru.app.incredible.pets.domain.RandomCatInteractor
+import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
 import timber.log.Timber
 
 class CatPm(
+    private val resourceHelper: ResourceHelper,
     private val randomCatInteractor: RandomCatInteractor
 ) : BasePm() {
 
@@ -36,6 +38,7 @@ class CatPm(
 
         updateImageButtonClicks.observable
             .flatMapSingle { randomCat() }
+            .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
             .subscribe(
                 {

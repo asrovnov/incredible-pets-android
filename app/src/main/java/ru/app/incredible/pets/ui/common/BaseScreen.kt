@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.appcompat.app.AlertDialog
 import me.dmdev.rxpm.base.PmFragment
+import me.dmdev.rxpm.widget.bindTo
+import ru.app.incredible.pets.R
 
 abstract class BaseScreen<PM : BasePm> : PmFragment<PM>(), BackButtonHandler {
 
@@ -28,6 +31,12 @@ abstract class BaseScreen<PM : BasePm> : PmFragment<PM>(), BackButtonHandler {
 
     @CallSuper
     override fun onBindPresentationModel(pm: PM) {
+        pm.loadingErrorDialog bindTo { message, _ ->
+            AlertDialog.Builder(view!!.context)
+                .setMessage(message)
+                .setPositiveButton(R.string.close, null)
+                .create()
+        }
     }
 
     override fun onResume() {

@@ -6,10 +6,12 @@ import me.dmdev.rxpm.bindProgress
 import me.dmdev.rxpm.state
 import ru.app.incredible.pets.domain.Dog
 import ru.app.incredible.pets.domain.RandomDogInteractor
+import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
 import timber.log.Timber
 
 class DogPm(
+    private val resourceHelper: ResourceHelper,
     private val randomDogInteractor: RandomDogInteractor
 ) : BasePm() {
 
@@ -24,6 +26,7 @@ class DogPm(
         super.onCreate()
 
         randomDog()
+            .doOnError { showErrorMessage(it, resourceHelper) }
             .subscribe(
                 {
                     dogImageUrl.consumer.accept(it.dogImageUrl)
@@ -36,6 +39,7 @@ class DogPm(
 
         updateImageButtonClicks.observable
             .flatMapSingle { randomDog() }
+            .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
             .subscribe(
                 {

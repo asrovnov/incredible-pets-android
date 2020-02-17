@@ -7,7 +7,7 @@ import ru.app.incredible.pets.domain.RandomDogInteractor
 object InteractorModule {
 
     fun create() = module {
-        factory { RandomDogInteractor(get()) }
-        factory { RandomCatInteractor(get()) }
+        factory { RandomDogInteractor(get(), get()) }
+        factory { RandomCatInteractor(get(), get()) }
     }
 }
