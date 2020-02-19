@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">incredible-pets-android</string>
+
+    <string name="app_name">Pets</string>
+
+    <!-- Base -->
+    <string name="close">Close</string>
+
+    <!-- Main Bottom Bar -->
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="update">Update image</string>
+
+    <!-- Error dialogs -->
+    <string name="dialog_error_no_internet_connection_msg">No internet connection</string>
+    <string name="dialog_error_unknown_error_msg">Resource not found</string>
+
 </resources>
