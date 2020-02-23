@@ -5,6 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import kotlinx.android.synthetic.main.screen_main_bottom_bar.*
 import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationMessageHandler
+import me.dmdev.rxpm.passTo
 import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.CatOpenScreen
 import ru.app.incredible.pets.DogOpenScreen
@@ -34,6 +35,7 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
                 R.id.cat -> Page.CAT.ordinal
                 else -> Page.DOG.ordinal
             }.let {
+                it passTo presentationModel.selectedPet
                 viewPager.setCurrentItem(it, true)
             }
             true
