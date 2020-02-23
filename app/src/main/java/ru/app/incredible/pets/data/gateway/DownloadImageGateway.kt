@@ -8,6 +8,9 @@ import com.liulishuo.filedownloader.FileDownloader
 import com.liulishuo.filedownloader.model.FileDownloadStatus
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.domain.Pet
 import ru.app.incredible.pets.domain.exceptions.InternetUnavailableException
@@ -26,9 +29,10 @@ class DownloadImageGateway(
     private val downloadImageIds = mutableMapOf<Pet, Int>()
     private val fileDownloader = FileDownloader.getImpl()
 
-    private val imageDownloadStates: BehaviorRelay<MutableMap<Pet, ImageDownloadState>> = BehaviorRelay.createDefault(
-        mutableMapOf()
-    )
+    private val imageDownloadStates: BehaviorRelay<MutableMap<Pet, ImageDownloadState>> =
+        BehaviorRelay.createDefault(
+            mutableMapOf()
+        )
 
     fun getDownloadState(pet: Pet, imageUrl: String): Observable<ImageDownloadState> {
         return imageDownloadStates.hide()
@@ -51,10 +55,17 @@ class DownloadImageGateway(
             }
     }
 
+    fun removeImage(imageUrl: String): Single<Boolean> {
+        return Single
+            .fromCallable { getImageFile(imageUrl).delete() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     private fun imageDownload(pet: Pet, imageUrl: String) {
         val downloadStart = fileDownloader.create(imageUrl)
             .setPath(getImageFile(imageUrl).toString())
-            .setListener(object: FileDownloadSampleListener(){
+            .setListener(object : FileDownloadSampleListener() {
                 override fun started(task: BaseDownloadTask?) {
                     updateDownloadState(pet, ImageDownloadState.PROGRESS)
                 }
@@ -72,7 +83,8 @@ class DownloadImageGateway(
     }
 
     private fun getImageFile(imageUrl: String): File {
-        val imageName = "${imageUrl.substringBeforeLast("/").substringAfterLast("/")}$BOTTOM_SPACE${imageUrl.substringAfterLast("/")}"
+        val imageName =
+            "${imageUrl.substringBeforeLast("/").substringAfterLast("/")}$BOTTOM_SPACE${imageUrl.substringAfterLast("/")}"
 
         return File(context.getExternalFilesDir(DIR_IMAGE), imageName)
     }
@@ -84,7 +96,10 @@ class DownloadImageGateway(
 
         when {
             getImageFile(imageUrl).exists() -> updateDownloadState(pet, ImageDownloadState.FINISHED)
-            downloadStatus == FileDownloadStatus.progress -> updateDownloadState(pet, ImageDownloadState.PROGRESS)
+            downloadStatus == FileDownloadStatus.progress -> updateDownloadState(
+                pet,
+                ImageDownloadState.PROGRESS
+            )
             else -> updateDownloadState(pet, ImageDownloadState.IDLE)
         }
     }
