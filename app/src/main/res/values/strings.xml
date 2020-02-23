@@ -4,6 +4,9 @@
 
     <!-- Base -->
     <string name="close">Close</string>
+    <string name="download">Download</string>
+    <string name="message_image_removed">Image removed</string>
+    <string name="message_image_not_found">Image not found</string>
 
     <!-- Main Bottom Bar -->
     <string name="dog">Dog</string>
