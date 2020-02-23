@@ -1,6 +1,8 @@
 package ru.app.incredible.pets
 
 import android.app.Application
+import com.liulishuo.filedownloader.FileDownloader
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -15,6 +17,7 @@ class App : Application() {
 
         initKoin()
         initLogger()
+        initFileDownloader()
     }
 
     private fun initKoin() {
@@ -38,5 +41,17 @@ class App : Application() {
             InteractorModule.create(),
             PmModule.create()
         )
+    }
+
+    private fun initFileDownloader() {
+        FileDownloader.setupOnApplicationOnCreate(this)
+            .connectionCreator(
+                FileDownloadUrlConnection.Creator(
+                    FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15000)
+                        .readTimeout(15000)
+                )
+            )
+            .commit()
     }
 }
