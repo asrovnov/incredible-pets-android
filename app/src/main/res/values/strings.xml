@@ -5,13 +5,15 @@
     <!-- Base -->
     <string name="close">Close</string>
     <string name="download">Download</string>
-    <string name="message_image_removed">Image removed</string>
-    <string name="message_image_not_found">Image not found</string>
+    <string name="update">Update image</string>
 
     <!-- Main Bottom Bar -->
-    <string name="dog">Dog</string>
-    <string name="cat">Cat</string>
-    <string name="update">Update image</string>
+    <string name="pets">Pets</string>
+    <string name="gallery">Gallery</string>
+
+    <!-- Message dialogs -->
+    <string name="message_image_removed">Image removed</string>
+    <string name="message_image_not_found">Image not found</string>
 
     <!-- Error dialogs -->
     <string name="dialog_error_no_internet_connection_msg">No internet connection</string>
