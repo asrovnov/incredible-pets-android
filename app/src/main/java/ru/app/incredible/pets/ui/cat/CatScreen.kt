@@ -22,6 +22,7 @@ class CatScreen : BaseScreen<CatPm>() {
         super.onInitView()
 
         view?.toolbar?.setTitle(R.string.cat)
+        view?.toolbar?.inflateMenu(R.menu.download_image_action)
     }
 
     override fun onBindPresentationModel(pm: CatPm) {
