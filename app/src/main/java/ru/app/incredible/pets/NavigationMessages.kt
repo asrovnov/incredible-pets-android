@@ -4,5 +4,5 @@ import me.dmdev.rxpm.navigation.NavigationMessage
 
 class BackMessage : NavigationMessage
 
-class DogOpenScreen : NavigationMessage
-class CatOpenScreen : NavigationMessage
+class PetsOpenScreen : NavigationMessage
+class GalleryOpenScreen : NavigationMessage
