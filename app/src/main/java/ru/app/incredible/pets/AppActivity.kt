@@ -13,10 +13,7 @@ class AppActivity : AppCompatActivity(), NavigationMessageHandler {
     private lateinit var navigator: FragmentNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val instanceState = null
-
-        super.onCreate(instanceState)
+        super.onCreate(savedInstanceState)
 
         setTheme(R.style.AppTheme)
 
@@ -28,7 +25,7 @@ class AppActivity : AppCompatActivity(), NavigationMessageHandler {
         navigator = FragmentNavigator(R.id.screenContainer, supportFragmentManager, this)
 
         @Suppress("SENSELESS_COMPARISON")
-        if (instanceState == null) {
+        if (savedInstanceState == null) {
             navigator.setRoot(MainBottomBarScreen())
         }
     }

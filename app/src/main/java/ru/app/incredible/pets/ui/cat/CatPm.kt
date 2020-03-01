@@ -4,16 +4,18 @@ import io.reactivex.Single
 import me.dmdev.rxpm.action
 import me.dmdev.rxpm.bindProgress
 import me.dmdev.rxpm.state
+import ru.app.incredible.pets.data.gateway.PetGateway
 import ru.app.incredible.pets.domain.Cat
 import ru.app.incredible.pets.domain.RandomCatInteractor
 import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
-import timber.log.Timber
 
+// TODO: (When image download is ready) Make a gallery from this screen
 class CatPm(
     private val resourceHelper: ResourceHelper,
-    private val randomCatInteractor: RandomCatInteractor
-) : BasePm() {
+    private val randomCatInteractor: RandomCatInteractor,
+    petGateway: PetGateway
+) : BasePm(petGateway) {
 
     val catImageUrl = state<String>()
 
@@ -26,28 +28,15 @@ class CatPm(
         super.onCreate()
 
         randomCat()
-            .subscribe(
-                {
-                    catImageUrl.consumer.accept(it.catImageUrl)
-                },
-                {
-                    Timber.d("!! error: $it")
-                }
-            )
+            .doOnError { showErrorMessage(it, resourceHelper) }
+            .subscribe({ catImageUrl.consumer.accept(it.catImageUrl) }, {})
             .untilDestroy()
 
         updateImageButtonClicks.observable
             .flatMapSingle { randomCat() }
             .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
-            .subscribe(
-                {
-                    catImageUrl.consumer.accept(it.catImageUrl)
-                },
-                {
-                    Timber.tag("!!").d("error: $it")
-                }
-            )
+            .subscribe({ catImageUrl.consumer.accept(it.catImageUrl) }, {})
             .untilDestroy()
     }
 

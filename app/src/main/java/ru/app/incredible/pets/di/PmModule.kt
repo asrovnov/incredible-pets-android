@@ -8,8 +8,8 @@ import ru.app.incredible.pets.ui.main.MainBottomBarPm
 object PmModule {
 
     fun create() = module {
-        factory { MainBottomBarPm() }
-        factory { DogPm(get(), get()) }
-        factory { CatPm(get(), get()) }
+        factory { MainBottomBarPm(get()) }
+        factory { DogPm(get(), get(), get(), get(), get(), get(), get()) }
+        factory { CatPm(get(), get(), get()) }
     }
 }

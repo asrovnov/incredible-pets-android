@@ -25,6 +25,16 @@
         <item name="itemTextAppearanceInactive">@style/Text.BottomNavigation</item>
     </style>
 
+    <style name="AppToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AppToolbar.Primary">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextColor">?android:textColorPrimaryInverse</item>
+        <item name="subtitleTextColor">?android:textColorPrimaryInverse</item>
+    </style>
+
     <style name="AppProgressBar">
         <item name="android:indeterminateTint">?attr/colorSecondary</item>
     </style>

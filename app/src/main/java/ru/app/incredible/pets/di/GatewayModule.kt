@@ -1,9 +1,7 @@
 package ru.app.incredible.pets.di
 
 import org.koin.dsl.module
-import ru.app.incredible.pets.data.gateway.NetworkStateGateway
-import ru.app.incredible.pets.data.gateway.RandomCatGateway
-import ru.app.incredible.pets.data.gateway.RandomDogGateway
+import ru.app.incredible.pets.data.gateway.*
 
 object GatewayModule {
 
@@ -11,5 +9,7 @@ object GatewayModule {
         single { RandomDogGateway(get()) }
         single { RandomCatGateway(get()) }
         single { NetworkStateGateway(get()) }
+        single { DownloadImageGateway(get(), get()) }
+        single { PetGateway() }
     }
 }
