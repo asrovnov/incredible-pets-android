@@ -12,10 +12,6 @@ abstract class BaseListAdapter<T : Identifiable, VH : BaseViewHolder<T>> :
         submitList(data)
     }
 
-    init {
-        setHasStableIds(true)
-    }
-
     override fun getItemId(position: Int): Long {
         return getItem(position).id
     }
