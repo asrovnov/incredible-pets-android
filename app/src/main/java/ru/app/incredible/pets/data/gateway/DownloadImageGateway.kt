@@ -24,15 +24,21 @@ class DownloadImageGateway(
     companion object {
         private const val DIR_IMAGE = "images"
         private const val BOTTOM_SPACE = "_"
+        const val FILE_DELETED = "deleted"
     }
 
     private val downloadImageIds = mutableMapOf<Pet, Int>()
     private val fileDownloader = FileDownloader.getImpl()
 
+    private val imageDownloaded: BehaviorRelay<File> = BehaviorRelay.createDefault(File(""))
     private val imageDownloadStates: BehaviorRelay<MutableMap<Pet, ImageDownloadState>> =
         BehaviorRelay.createDefault(
             mutableMapOf()
         )
+
+    fun getImageDownloaded(): Observable<File> {
+        return imageDownloaded.hide()
+    }
 
     fun getDownloadState(pet: Pet, imageUrl: String): Observable<ImageDownloadState> {
         return imageDownloadStates.hide()
@@ -56,8 +62,11 @@ class DownloadImageGateway(
     }
 
     fun removeImage(imageUrl: String): Single<Boolean> {
+        imageDownloaded.accept(File(FILE_DELETED))
         return Single
-            .fromCallable { getImageFile(imageUrl).delete() }
+            .fromCallable {
+                getImageFile(imageUrl).delete()
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -72,6 +81,7 @@ class DownloadImageGateway(
 
                 override fun completed(task: BaseDownloadTask?) {
                     updateDownloadState(pet, ImageDownloadState.FINISHED)
+                    imageDownloaded.accept(getImageFile(imageUrl))
                 }
 
                 override fun error(task: BaseDownloadTask?, e: Throwable?) {
