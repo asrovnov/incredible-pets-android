@@ -1,4 +1,4 @@
-package ru.app.incredible.pets.ui.dog
+package ru.app.incredible.pets.ui.pets
 
 import io.reactivex.Single
 import me.dmdev.rxpm.action
@@ -6,20 +6,18 @@ import me.dmdev.rxpm.bindProgress
 import me.dmdev.rxpm.state
 import me.dmdev.rxpm.widget.dialogControl
 import ru.app.incredible.pets.R
-import ru.app.incredible.pets.data.gateway.PetGateway
 import ru.app.incredible.pets.domain.*
 import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
 
-class DogPm(
+class PetsPm(
     private val resourceHelper: ResourceHelper,
     private val downloadImageInteractor: DownloadImageInteractor,
     private val randomDogInteractor: RandomDogInteractor,
     private val randomCatInteractor: RandomCatInteractor,
     private val getDownloadStateInteractor: GetDownloadStateInteractor,
-    private val removeImageInteractor: RemoveImageInteractor,
-    petGateway: PetGateway
-) : BasePm(petGateway) {
+    private val removeImageInteractor: RemoveImageInteractor
+) : BasePm() {
 
     private var countClicks = 1
 
@@ -69,8 +67,7 @@ class DogPm(
 
         toolbarItemButtonClicks.observable
             .filter { it == ToolbarItem.DOWNLOAD }
-            .flatMap { getPet() }
-            .flatMapCompletable { downloadImageInteractor.execute(it, dogImageUrl.value) }
+            .flatMapCompletable { downloadImageInteractor.execute(Pet(0), dogImageUrl.value) }
             .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
             .subscribe()

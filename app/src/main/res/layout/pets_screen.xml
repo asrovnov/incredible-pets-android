@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/screen_background">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
+    <ProgressBar
+        android:id="@+id/progressDownloadImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="12dp"
+        android:elevation="4dp"
+        android:indeterminateTint="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="@id/toolbar"/>
+
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/catCardView"
+        android:id="@+id/petCardView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dog_cat_screen_height_image"
         app:cardCornerRadius="30dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/updateImageButton">
+        app:layout_constraintBottom_toTopOf="@id/updateImageButton"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ImageView
-            android:id="@+id/catImage"
+            android:id="@+id/petImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"/>
@@ -32,20 +45,21 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/update"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/catCardView"/>
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/petCardView"/>
 
     <ProgressBar
-        android:id="@+id/progressCat"
+        android:id="@+id/progressPet"
         style="@style/AppProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/petCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/catCardView"
-        app:layout_constraintTop_toTopOf="@id/catCardView"/>
+        app:layout_constraintTop_toTopOf="@id/petCardView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

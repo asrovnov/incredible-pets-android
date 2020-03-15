@@ -11,5 +11,6 @@ object InteractorModule {
         factory { DownloadImageInteractor(get()) }
         factory { GetDownloadStateInteractor(get()) }
         factory { RemoveImageInteractor(get()) }
+        factory { GalleryInteractor(get(), get()) }
     }
 }

@@ -7,12 +7,12 @@ import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationMessageHandler
 import me.dmdev.rxpm.passTo
 import org.koin.android.ext.android.getKoin
-import ru.app.incredible.pets.CatOpenScreen
-import ru.app.incredible.pets.DogOpenScreen
+import ru.app.incredible.pets.GalleryOpenScreen
+import ru.app.incredible.pets.PetsOpenScreen
 import ru.app.incredible.pets.R
-import ru.app.incredible.pets.ui.cat.CatScreen
+import ru.app.incredible.pets.ui.gallery.GalleryScreen
 import ru.app.incredible.pets.ui.common.BaseScreen
-import ru.app.incredible.pets.ui.dog.DogScreen
+import ru.app.incredible.pets.ui.pets.PetsScreen
 
 class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHandler {
 
@@ -31,13 +31,10 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
 
         bottomNavigation.setOnNavigationItemSelectedListener { tab ->
             when (tab.itemId) {
-                R.id.dog -> Page.DOG.ordinal
-                R.id.cat -> Page.CAT.ordinal
-                else -> Page.DOG.ordinal
-            }.let {
-                it passTo presentationModel.selectedPet
-                viewPager.setCurrentItem(it, true)
-            }
+                R.id.pets -> Page.PETS.ordinal
+                R.id.gallery -> Page.GALLERY.ordinal
+                else -> Page.PETS.ordinal
+            }.let { viewPager.setCurrentItem(it, true) }
             true
         }
 
@@ -47,7 +44,7 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
         }
     }
 
-    private enum class Page { DOG, CAT }
+    private enum class Page { PETS, GALLERY }
 
     private class PageAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
@@ -55,21 +52,21 @@ class MainBottomBarScreen : BaseScreen<MainBottomBarPm>(), NavigationMessageHand
 
         override fun createFragment(position: Int): Fragment {
             return when(Page.values()[position]) {
-                Page.DOG -> DogScreen()
-                Page.CAT -> CatScreen()
+                Page.PETS -> PetsScreen()
+                Page.GALLERY -> GalleryScreen()
             }
         }
     }
 
     override fun handleNavigationMessage(message: NavigationMessage): Boolean {
         return when (message) {
-            is DogOpenScreen -> {
-                bottomNavigation.selectedItemId = R.id.dog
+            is PetsOpenScreen -> {
+                bottomNavigation.selectedItemId = R.id.pets
                 true
             }
 
-            is CatOpenScreen -> {
-                bottomNavigation.selectedItemId = R.id.cat
+            is GalleryOpenScreen -> {
+                bottomNavigation.selectedItemId = R.id.gallery
                 true
             }
 
