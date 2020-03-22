@@ -1,13 +1,11 @@
 package ru.app.incredible.pets.ui.common
 
 import androidx.annotation.CallSuper
-import io.reactivex.Observable
 import me.dmdev.rxpm.*
 import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationalPm
 import me.dmdev.rxpm.widget.dialogControl
 import ru.app.incredible.pets.BackMessage
-import ru.app.incredible.pets.domain.Pet
 import ru.app.incredible.pets.system.ResourceHelper
 
 abstract class BasePm : PresentationModel(), NavigationalPm {

@@ -36,9 +36,9 @@ class PetsPm(
     override fun onCreate() {
         super.onCreate()
 
-        randomDog()
+        randomPet(0)
             .doOnError { showErrorMessage(it, resourceHelper) }
-            .subscribe({ dogImageUrl.consumer.accept(it.dogImageUrl) }, {})
+            .subscribe({ dogImageUrl.consumer.accept((it as Dog).dogImageUrl) }, {})
             .untilDestroy()
 
         dogImageUrl.observable
@@ -49,11 +49,7 @@ class PetsPm(
         updateImageButtonClicks.observable
             .map { countClicks++ }
             .flatMapSingle { countClicks ->
-                if (countClicks % 2 == 0) {
-                    randomDog()
-                } else {
-                    randomCat()
-                }
+                randomPet(countClicks)
             }
             .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
@@ -89,15 +85,12 @@ class PetsPm(
 
     }
 
-    private fun randomDog(): Single<Dog> {
-        return randomDogInteractor.execute()
-            .doOnSubscribe { updateImageButtonEnabled.consumer.accept(false) }
-            .doFinally { updateImageButtonEnabled.consumer.accept(true) }
-            .bindProgress(progress.consumer)
-    }
-
-    private fun randomCat(): Single<Cat> {
-        return randomCatInteractor.execute()
+    private fun randomPet(countClicks: Int): Single<*> {
+        return if (countClicks % 2 == 0) {
+            randomDogInteractor.execute()
+        } else {
+            randomCatInteractor.execute()
+        }
             .doOnSubscribe { updateImageButtonEnabled.consumer.accept(false) }
             .doFinally { updateImageButtonEnabled.consumer.accept(true) }
             .bindProgress(progress.consumer)
