@@ -11,5 +11,6 @@ object GatewayModule {
         single { NetworkStateGateway(get()) }
         single { DownloadImageGateway(get(), get()) }
         single { PetGateway() }
+        single { GetDownloadedImageGateway(get()) }
     }
 }

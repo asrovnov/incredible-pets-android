@@ -1,4 +1,4 @@
-package ru.app.incredible.pets.ui.dog
+package ru.app.incredible.pets.ui.pets
 
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -7,7 +7,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
-import kotlinx.android.synthetic.main.dog_screen.*
+import kotlinx.android.synthetic.main.pets_screen.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
 import me.dmdev.rxpm.widget.bindTo
@@ -16,20 +16,20 @@ import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.ui.common.BaseScreen
 
-class DogScreen : BaseScreen<DogPm>() {
+class PetsScreen : BaseScreen<PetsPm>() {
 
-    override val screenLayout = R.layout.dog_screen
+    override val screenLayout = R.layout.pets_screen
 
-    override fun providePresentationModel(): DogPm = getKoin().get()
+    override fun providePresentationModel(): PetsPm = getKoin().get()
 
     override fun onInitView() {
         super.onInitView()
 
-        view?.toolbar?.setTitle(R.string.dog)
+        view?.toolbar?.setTitle(R.string.pets)
         view?.toolbar?.inflateMenu(R.menu.download_image_action)
     }
 
-    override fun onBindPresentationModel(pm: DogPm) {
+    override fun onBindPresentationModel(pm: PetsPm) {
         super.onBindPresentationModel(pm)
 
         view?.toolbar?.inflateMenu(R.menu.remove_image_action)
@@ -53,7 +53,7 @@ class DogScreen : BaseScreen<DogPm>() {
             progressDownloadImage.isVisible = it == ImageDownloadState.PROGRESS
         }
 
-        pm.progress bindTo progressDog.visibility()
+        pm.progress bindTo progressPet.visibility()
         pm.updateImageButtonEnabled bindTo updateImageButton::setEnabled
 
         updateImageButton.clicks() bindTo pm.updateImageButtonClicks
@@ -62,7 +62,7 @@ class DogScreen : BaseScreen<DogPm>() {
             Glide.with(this)
                 .load(it)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(dogImage)
+                .into(petImage)
         }
 
         pm.messageDialog bindTo { message, _ ->

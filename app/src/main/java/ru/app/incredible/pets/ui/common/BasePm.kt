@@ -1,21 +1,14 @@
 package ru.app.incredible.pets.ui.common
 
 import androidx.annotation.CallSuper
-import io.reactivex.Observable
 import me.dmdev.rxpm.*
 import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationalPm
 import me.dmdev.rxpm.widget.dialogControl
 import ru.app.incredible.pets.BackMessage
-import ru.app.incredible.pets.data.gateway.PetGateway
-import ru.app.incredible.pets.domain.Pet
 import ru.app.incredible.pets.system.ResourceHelper
 
-abstract class BasePm(
-    private val petGateway: PetGateway
-) : PresentationModel(), NavigationalPm {
-
-    open val currentPet = state<Int>()
+abstract class BasePm : PresentationModel(), NavigationalPm {
 
     open val backAction = action<Unit>()
 
@@ -30,10 +23,6 @@ abstract class BasePm(
     @CallSuper
     override fun onCreate() {
         super.onCreate()
-
-        petGateway.getSelectedPet()
-            .subscribe(currentPet.consumer)
-            .untilDestroy()
 
         backAction.observable
             .map { BackMessage() }
@@ -51,10 +40,5 @@ abstract class BasePm(
 
     protected fun showErrorMessage(throwable: Throwable, resourceHelper: ResourceHelper) {
         getErrorMessage(throwable, resourceHelper)?.let { loadingErrorDialog.show(it) }
-    }
-
-    protected fun getPet() : Observable<Pet> {
-        return currentPet.observable
-            .map { Pet(it) }
     }
 }

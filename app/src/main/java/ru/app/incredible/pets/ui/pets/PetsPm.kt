@@ -1,4 +1,4 @@
-package ru.app.incredible.pets.ui.dog
+package ru.app.incredible.pets.ui.pets
 
 import io.reactivex.Single
 import me.dmdev.rxpm.action
@@ -6,20 +6,18 @@ import me.dmdev.rxpm.bindProgress
 import me.dmdev.rxpm.state
 import me.dmdev.rxpm.widget.dialogControl
 import ru.app.incredible.pets.R
-import ru.app.incredible.pets.data.gateway.PetGateway
 import ru.app.incredible.pets.domain.*
 import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
 
-class DogPm(
+class PetsPm(
     private val resourceHelper: ResourceHelper,
     private val downloadImageInteractor: DownloadImageInteractor,
     private val randomDogInteractor: RandomDogInteractor,
     private val randomCatInteractor: RandomCatInteractor,
     private val getDownloadStateInteractor: GetDownloadStateInteractor,
-    private val removeImageInteractor: RemoveImageInteractor,
-    petGateway: PetGateway
-) : BasePm(petGateway) {
+    private val removeImageInteractor: RemoveImageInteractor
+) : BasePm() {
 
     private var countClicks = 1
 
@@ -38,9 +36,9 @@ class DogPm(
     override fun onCreate() {
         super.onCreate()
 
-        randomDog()
+        randomPet(0)
             .doOnError { showErrorMessage(it, resourceHelper) }
-            .subscribe({ dogImageUrl.consumer.accept(it.dogImageUrl) }, {})
+            .subscribe({ dogImageUrl.consumer.accept((it as Dog).dogImageUrl) }, {})
             .untilDestroy()
 
         dogImageUrl.observable
@@ -51,11 +49,7 @@ class DogPm(
         updateImageButtonClicks.observable
             .map { countClicks++ }
             .flatMapSingle { countClicks ->
-                if (countClicks % 2 == 0) {
-                    randomDog()
-                } else {
-                    randomCat()
-                }
+                randomPet(countClicks)
             }
             .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
@@ -69,8 +63,7 @@ class DogPm(
 
         toolbarItemButtonClicks.observable
             .filter { it == ToolbarItem.DOWNLOAD }
-            .flatMap { getPet() }
-            .flatMapCompletable { downloadImageInteractor.execute(it, dogImageUrl.value) }
+            .flatMapCompletable { downloadImageInteractor.execute(Pet(0), dogImageUrl.value) }
             .doOnError { showErrorMessage(it, resourceHelper) }
             .retry()
             .subscribe()
@@ -92,15 +85,12 @@ class DogPm(
 
     }
 
-    private fun randomDog(): Single<Dog> {
-        return randomDogInteractor.execute()
-            .doOnSubscribe { updateImageButtonEnabled.consumer.accept(false) }
-            .doFinally { updateImageButtonEnabled.consumer.accept(true) }
-            .bindProgress(progress.consumer)
-    }
-
-    private fun randomCat(): Single<Cat> {
-        return randomCatInteractor.execute()
+    private fun randomPet(countClicks: Int): Single<*> {
+        return if (countClicks % 2 == 0) {
+            randomDogInteractor.execute()
+        } else {
+            randomCatInteractor.execute()
+        }
             .doOnSubscribe { updateImageButtonEnabled.consumer.accept(false) }
             .doFinally { updateImageButtonEnabled.consumer.accept(true) }
             .bindProgress(progress.consumer)
