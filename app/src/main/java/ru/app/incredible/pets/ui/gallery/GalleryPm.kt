@@ -9,16 +9,10 @@ class GalleryPm(
     private val galleryInteractor: GalleryInteractor
 ) : BasePm() {
 
-    val images = state<List<PetItem>>()
-
-    override fun onCreate() {
-        super.onCreate()
-
+    val images = state<List<PetItem>> {
         galleryInteractor.execute()
             .map { imageList ->
                 imageList.map { PetItem(it.toString()) }
             }
-            .subscribe(images.consumer)
-            .untilDestroy()
     }
 }

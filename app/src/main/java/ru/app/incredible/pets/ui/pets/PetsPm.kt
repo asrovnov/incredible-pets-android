@@ -23,57 +23,48 @@ class PetsPm(
 
     val messageDialog = dialogControl<String, Unit>()
 
-    val dogImageUrl = state<String>()
+    val dogImageUrl = state<String> {
+        randomPet(0)
+            .map { (it as Dog).dogImageUrl }
+            .doOnError { showErrorMessage(it, resourceHelper) }
+            .toObservable()
+    }
 
-    val imageDownloadStatus = state(ImageDownloadState.IDLE)
+    val imageDownloadStatus = state(ImageDownloadState.IDLE) {
+        dogImageUrl.observable
+            .flatMap { getDownloadStateInteractor.execute(Pet(0), it) }
+    }
 
     val progress = state(false)
     val updateImageButtonEnabled = state<Boolean>()
 
-    val updateImageButtonClicks = action<Unit>()
-    val toolbarItemButtonClicks = action<ToolbarItem>()
-
-    override fun onCreate() {
-        super.onCreate()
-
-        randomPet(0)
-            .doOnError { showErrorMessage(it, resourceHelper) }
-            .subscribe({ dogImageUrl.consumer.accept((it as Dog).dogImageUrl) }, {})
-            .untilDestroy()
-
-        dogImageUrl.observable
-            .flatMap { getDownloadStateInteractor.execute(Pet(0), it) }
-            .subscribe(imageDownloadStatus.consumer)
-            .untilDestroy()
-
-        updateImageButtonClicks.observable
-            .map { countClicks++ }
+    val updateImageButtonClicks = action<Unit> {
+        this.map { countClicks++ }
             .flatMapSingle { countClicks ->
                 randomPet(countClicks)
             }
             .doOnError { showErrorMessage(it, resourceHelper) }
-            .retry()
-            .subscribe { pet ->
+            .doOnNext { pet ->
                 when (pet) {
                     is Dog -> dogImageUrl.consumer.accept(pet.dogImageUrl)
                     is Cat -> dogImageUrl.consumer.accept(pet.catImageUrl)
                 }
             }
-            .untilDestroy()
+    }
 
-        toolbarItemButtonClicks.observable
-            .filter { it == ToolbarItem.DOWNLOAD }
-            .flatMapCompletable { downloadImageInteractor.execute(Pet(0), dogImageUrl.value) }
+    val downloadButtonClicks = action<Unit> {
+        this.flatMap {
+            downloadImageInteractor.execute(Pet(0), dogImageUrl.value)
+                .toObservable<Unit>()
+        }
             .doOnError { showErrorMessage(it, resourceHelper) }
-            .retry()
-            .subscribe()
-            .untilDestroy()
+    }
 
-        toolbarItemButtonClicks.observable
-            .filter { it == ToolbarItem.REMOVE }
-            .flatMapSingle { removeImageInteractor.execute(dogImageUrl.value) }
-            .retry()
-            .subscribe {
+    val removeButtonClicks = action<Unit> {
+        this.flatMapSingle {
+            removeImageInteractor.execute(dogImageUrl.value)
+        }
+            .doOnNext {
                 if (it) {
                     showMessage(R.string.message_image_removed)
                 } else {
@@ -81,8 +72,6 @@ class PetsPm(
                 }
                 imageDownloadStatus.consumer.accept(ImageDownloadState.IDLE)
             }
-            .untilDestroy()
-
     }
 
     private fun randomPet(countClicks: Int): Single<*> {
