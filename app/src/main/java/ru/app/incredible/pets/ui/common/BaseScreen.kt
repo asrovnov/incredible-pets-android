@@ -18,7 +18,7 @@ abstract class BaseScreen<PM : BasePm> : PmFragment<PM>(), BackButtonHandler {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(screenLayout, container, false).also {
             (it as? ViewGroup)?.isClickable = true
         }

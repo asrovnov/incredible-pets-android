@@ -59,9 +59,13 @@ object NetworkModule {
     }
 
     private fun loggingInterceptor(): Interceptor {
-        return HttpLoggingInterceptor { message ->
-            Timber.tag("OkHttp").d(message)
-        }.apply {
+        return HttpLoggingInterceptor(
+            object : HttpLoggingInterceptor.Logger {
+                override fun log(message: String) {
+                    Timber.tag("OkHttp").d(message)
+                }
+            }
+        ).apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
