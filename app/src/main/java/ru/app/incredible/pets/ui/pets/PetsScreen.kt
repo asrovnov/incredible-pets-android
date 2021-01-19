@@ -4,16 +4,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import kotlinx.android.synthetic.main.pets_screen.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
+import me.dmdev.rxpm.passTo
 import me.dmdev.rxpm.widget.bindTo
 import ru.app.incredible.pets.R
 import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.domain.ImageDownloadState
+import ru.app.incredible.pets.extensions.visible
 import ru.app.incredible.pets.ui.common.BaseScreen
 
 class PetsScreen : BaseScreen<PetsPm>() {
@@ -35,13 +36,14 @@ class PetsScreen : BaseScreen<PetsPm>() {
         view?.toolbar?.inflateMenu(R.menu.remove_image_action)
         view?.toolbar?.menu?.findItem(R.id.removeImage)?.isVisible = false
 
-        view?.toolbar?.itemClicks()!!
-            .map{
-                when (it.itemId) {
-                    R.id.downloadImage -> ToolbarItem.DOWNLOAD
-                    else -> ToolbarItem.REMOVE
-                }
-            } bindTo pm.toolbarItemButtonClicks
+        view?.toolbar?.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.downloadImage -> Unit passTo pm.downloadButtonClicks
+                R.id.removeImage -> Unit passTo pm.removeButtonClicks
+            }
+
+            true
+        }
 
         pm.imageDownloadStatus bindTo {
             view?.toolbar?.menu?.findItem(R.id.downloadImage)?.isVisible =
@@ -50,7 +52,7 @@ class PetsScreen : BaseScreen<PetsPm>() {
             view?.toolbar?.menu?.findItem(R.id.removeImage)?.isVisible =
                 it == ImageDownloadState.FINISHED
 
-            progressDownloadImage.isVisible = it == ImageDownloadState.PROGRESS
+            progressDownloadImage.visible(it == ImageDownloadState.PROGRESS)
         }
 
         pm.progress bindTo progressPet.visibility()
@@ -66,7 +68,7 @@ class PetsScreen : BaseScreen<PetsPm>() {
         }
 
         pm.messageDialog bindTo { message, _ ->
-            AlertDialog.Builder(view!!.context)
+            AlertDialog.Builder(requireContext())
                 .setMessage(message)
                 .setPositiveButton(R.string.close, null)
                 .create()
