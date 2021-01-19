@@ -5,7 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.app.incredible.pets.data.backend.DogApi
 import ru.app.incredible.pets.data.backend.mapToEntity
-import ru.app.incredible.pets.domain.Dog
+import ru.app.incredible.pets.domain.dog.Dog
 
 class RandomDogGateway(
     private val api: DogApi

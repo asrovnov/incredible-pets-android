@@ -1,7 +1,7 @@
 package ru.app.incredible.pets.data.backend.dto
 
 import com.squareup.moshi.Json
-import ru.app.incredible.pets.domain.Dog
+import ru.app.incredible.pets.domain.dog.Dog
 
 data class DogDto(
     @Json(name = "message") val message: String,

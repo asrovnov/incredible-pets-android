@@ -1,7 +1,6 @@
 package ru.app.incredible.pets.ui.pets
 
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.jakewharton.rxbinding3.view.clicks
