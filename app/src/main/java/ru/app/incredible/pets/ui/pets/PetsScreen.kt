@@ -14,6 +14,7 @@ import me.dmdev.rxpm.widget.bindTo
 import ru.app.incredible.pets.R
 import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.domain.ImageDownloadState
+import ru.app.incredible.pets.extensions.visible
 import ru.app.incredible.pets.ui.common.BaseScreen
 
 class PetsScreen : BaseScreen<PetsPm>() {
@@ -51,7 +52,7 @@ class PetsScreen : BaseScreen<PetsPm>() {
             view?.toolbar?.menu?.findItem(R.id.removeImage)?.isVisible =
                 it == ImageDownloadState.FINISHED
 
-            progressDownloadImage.isVisible = it == ImageDownloadState.PROGRESS
+            progressDownloadImage.visible(it == ImageDownloadState.PROGRESS)
         }
 
         pm.progress bindTo progressPet.visibility()
@@ -67,7 +68,7 @@ class PetsScreen : BaseScreen<PetsPm>() {
         }
 
         pm.messageDialog bindTo { message, _ ->
-            AlertDialog.Builder(view!!.context)
+            AlertDialog.Builder(requireContext())
                 .setMessage(message)
                 .setPositiveButton(R.string.close, null)
                 .create()
