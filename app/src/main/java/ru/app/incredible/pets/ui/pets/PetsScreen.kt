@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
-import kotlinx.android.synthetic.main.pets_screen.*
+import kotlinx.android.synthetic.main.screen_pets.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
 import me.dmdev.rxpm.passTo
@@ -18,7 +18,7 @@ import ru.app.incredible.pets.ui.common.BaseScreen
 
 class PetsScreen : BaseScreen<PetsPm>() {
 
-    override val screenLayout = R.layout.pets_screen
+    override val screenLayout = R.layout.screen_pets
 
     override fun providePresentationModel(): PetsPm = getKoin().get()
 
