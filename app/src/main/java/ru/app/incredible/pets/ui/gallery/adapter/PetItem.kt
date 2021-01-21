@@ -8,5 +8,5 @@ import ru.app.incredible.pets.domain.Identifiable
 data class PetItem(
     val image: String
 ) : Identifiable, Parcelable {
-    override val id: Long get() = image.toLong()
+    override val id: Long get() = image.length.toLong()
 }
