@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import me.dmdev.rxpm.navigation.NavigationMessage
 import me.dmdev.rxpm.navigation.NavigationMessageHandler
 import ru.app.incredible.pets.ui.common.BackButtonHandler
+import ru.app.incredible.pets.ui.gallery.full_image.FullImageScreen
 import ru.app.incredible.pets.ui.main.MainBottomBarScreen
 
 class AppActivity : AppCompatActivity(), NavigationMessageHandler {
@@ -34,6 +35,7 @@ class AppActivity : AppCompatActivity(), NavigationMessageHandler {
     override fun handleNavigationMessage(msg: NavigationMessage): Boolean {
         when (msg) {
             is BackMessage -> navigator.back()
+            is OpenFullImageScreen -> navigator.goTo(FullImageScreen.newInstance(msg.imageId, msg.listImage))
 
             else -> return false
         }

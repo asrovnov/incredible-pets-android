@@ -7,6 +7,13 @@ import me.dmdev.rxpm.state
 import me.dmdev.rxpm.widget.dialogControl
 import ru.app.incredible.pets.R
 import ru.app.incredible.pets.domain.*
+import ru.app.incredible.pets.domain.cat.Cat
+import ru.app.incredible.pets.domain.cat.RandomCatInteractor
+import ru.app.incredible.pets.domain.dog.Dog
+import ru.app.incredible.pets.domain.dog.RandomDogInteractor
+import ru.app.incredible.pets.domain.DownloadImageInteractor
+import ru.app.incredible.pets.domain.GetDownloadStateInteractor
+import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
 
