@@ -12,7 +12,7 @@ import ru.app.incredible.pets.domain.cat.RandomCatInteractor
 import ru.app.incredible.pets.domain.dog.Dog
 import ru.app.incredible.pets.domain.dog.RandomDogInteractor
 import ru.app.incredible.pets.domain.DownloadImageInteractor
-import ru.app.incredible.pets.domain.GetDownloadStateInteractor
+import ru.app.incredible.pets.domain.DownloadStateInteractor
 import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.system.ResourceHelper
 import ru.app.incredible.pets.ui.common.BasePm
@@ -22,7 +22,7 @@ class PetsPm(
     private val downloadImageInteractor: DownloadImageInteractor,
     private val randomDogInteractor: RandomDogInteractor,
     private val randomCatInteractor: RandomCatInteractor,
-    private val getDownloadStateInteractor: GetDownloadStateInteractor,
+    private val downloadStateInteractor: DownloadStateInteractor,
     private val removeImageInteractor: RemoveImageInteractor
 ) : BasePm() {
 
@@ -39,7 +39,7 @@ class PetsPm(
 
     val imageDownloadStatus = state(ImageDownloadState.IDLE) {
         dogImageUrl.observable
-            .flatMap { getDownloadStateInteractor.execute(Pet(0), it) }
+            .flatMap { downloadStateInteractor.execute(Pet(0), it) }
     }
 
     val progress = state(false)
