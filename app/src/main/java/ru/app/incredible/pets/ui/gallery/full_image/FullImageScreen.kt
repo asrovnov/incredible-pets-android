@@ -53,7 +53,7 @@ class FullImageScreen : BaseScreen<FullImagePm>() {
         super.onInitView()
 
         imageViewPager.adapter = slideImagePetAdapter
-        setPageTransformerForAdvantageViewPager()
+        setPageTransformerForImageViewPager()
     }
 
     override fun onBindPresentationModel(pm: FullImagePm) {
@@ -65,7 +65,7 @@ class FullImageScreen : BaseScreen<FullImagePm>() {
         }
     }
 
-    private fun setPageTransformerForAdvantageViewPager() {
+    private fun setPageTransformerForImageViewPager() {
         with(imageViewPager) {
             clipToPadding = false
             clipChildren = false
