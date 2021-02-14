@@ -10,7 +10,7 @@ import ru.app.incredible.pets.ui.common.adapter.BaseListAdapter
 import ru.app.incredible.pets.ui.common.adapter.BaseViewHolder
 
 class GalleryAdapter(
-    private val onImagePetClick: (image: PetItem) -> Unit
+    private val imagePetClickListener: (image: String) -> Unit
 ) : BaseListAdapter<PetItem, GalleryAdapter.PetImageItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetImageItemViewHolder {
@@ -19,13 +19,18 @@ class GalleryAdapter(
 
     inner class PetImageItemViewHolder(view: View) : BaseViewHolder<PetItem>(view) {
 
+        private var item: PetItem? = null
+
         init {
             containerView.setOnClickListener {
-                onImagePetClick(getItem(adapterPosition))
+                item?.let { petItem ->
+                    imagePetClickListener(petItem.image)
+                }
             }
         }
 
         override fun bind(item : PetItem) {
+            this.item = item
             Glide.with(itemView)
                 .load(item.image)
                 .into(petImage)

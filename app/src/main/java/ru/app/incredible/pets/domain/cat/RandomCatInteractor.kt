@@ -1,22 +1,23 @@
-package ru.app.incredible.pets.domain
+package ru.app.incredible.pets.domain.cat
 
 import io.reactivex.Single
 import ru.app.incredible.pets.data.gateway.NetworkStateGateway
-import ru.app.incredible.pets.data.gateway.RandomDogGateway
+import ru.app.incredible.pets.data.gateway.RandomCatGateway
+import ru.app.incredible.pets.domain.cat.Cat
 import ru.app.incredible.pets.domain.exceptions.InternetUnavailableException
 
-class RandomDogInteractor(
+class RandomCatInteractor(
     private val networkStateGateway: NetworkStateGateway,
-    private val randomDogGateway: RandomDogGateway
+    private val randomCatGateway: RandomCatGateway
 ) {
 
-    fun execute(): Single<Dog> {
+    fun execute(): Single<Cat> {
         return networkStateGateway
             .isNetworkEnabled()
             .firstOrError()
             .flatMap {
                 if (it) {
-                    randomDogGateway.getRandomDog()
+                    randomCatGateway.getRandomCat()
                 } else {
                     Single.error(InternetUnavailableException())
                 }

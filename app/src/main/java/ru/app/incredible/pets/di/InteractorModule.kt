@@ -2,6 +2,10 @@ package ru.app.incredible.pets.di
 
 import org.koin.dsl.module
 import ru.app.incredible.pets.domain.*
+import ru.app.incredible.pets.domain.cat.RandomCatInteractor
+import ru.app.incredible.pets.domain.dog.RandomDogInteractor
+import ru.app.incredible.pets.domain.DownloadImageInteractor
+import ru.app.incredible.pets.domain.GetDownloadStateInteractor
 
 object InteractorModule {
 

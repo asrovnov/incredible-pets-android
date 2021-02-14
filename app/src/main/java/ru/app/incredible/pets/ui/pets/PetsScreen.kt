@@ -1,12 +1,18 @@
 package ru.app.incredible.pets.ui.pets
 
+import android.graphics.drawable.Drawable
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.NoTransition
+import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.request.transition.TransitionFactory
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
-import kotlinx.android.synthetic.main.pets_screen.*
+import kotlinx.android.synthetic.main.screen_pets.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
 import me.dmdev.rxpm.passTo
@@ -16,10 +22,11 @@ import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.extensions.visible
 import ru.app.incredible.pets.ui.common.BaseScreen
+import kotlin.math.hypot
 
 class PetsScreen : BaseScreen<PetsPm>() {
 
-    override val screenLayout = R.layout.pets_screen
+    override val screenLayout = R.layout.screen_pets
 
     override fun providePresentationModel(): PetsPm = getKoin().get()
 
@@ -63,7 +70,7 @@ class PetsScreen : BaseScreen<PetsPm>() {
         pm.dogImageUrl bindTo {
             Glide.with(this)
                 .load(it)
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .transition(DrawableTransitionOptions.with(DrawableCircularRevealFactory()))
                 .into(petImage)
         }
 
@@ -72,6 +79,26 @@ class PetsScreen : BaseScreen<PetsPm>() {
                 .setMessage(message)
                 .setPositiveButton(R.string.close, null)
                 .create()
+        }
+    }
+
+    inner class DrawableCircularRevealFactory : TransitionFactory<Drawable> {
+
+        override fun build(dataSource: DataSource?, isFirstResource: Boolean): Transition<Drawable> {
+
+            val circularReveal = ViewAnimationUtils.createCircularReveal(
+                petImage,
+                0,
+                0,
+                0f,
+                hypot(petImage.width.toDouble(), petImage.height.toDouble()).toFloat()
+            )
+            circularReveal.interpolator = AccelerateDecelerateInterpolator()
+            circularReveal.duration = 300
+
+            circularReveal.start()
+
+            return NoTransition()
         }
     }
 }
