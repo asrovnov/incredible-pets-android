@@ -26,8 +26,10 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/petCardView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dog_cat_screen_height_image"
-        app:cardCornerRadius="30dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/normal_gap"
+        android:layout_marginBottom="@dimen/normal_gap"
+        app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@id/updateImageButton"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -42,13 +44,16 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateImageButton"
         style="@style/RoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="@dimen/big_gap"
+        android:layout_marginStart="@dimen/big_gap"
+        android:layout_marginBottom="@dimen/big_gap"
         android:text="@string/update"
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/petCardView"/>
 
     <ProgressBar

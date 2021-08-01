@@ -5,7 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.app.incredible.pets.data.backend.CatApi
 import ru.app.incredible.pets.data.backend.mapToEntity
-import ru.app.incredible.pets.domain.Cat
+import ru.app.incredible.pets.domain.cat.Cat
 
 class RandomCatGateway(
     private val api: CatApi

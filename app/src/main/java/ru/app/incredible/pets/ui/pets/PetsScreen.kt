@@ -1,12 +1,18 @@
 package ru.app.incredible.pets.ui.pets
 
+import android.graphics.drawable.Drawable
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.NoTransition
+import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.request.transition.TransitionFactory
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
-import kotlinx.android.synthetic.main.pets_screen.*
+import kotlinx.android.synthetic.main.screen_pets.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
 import me.dmdev.rxpm.passTo
@@ -16,10 +22,11 @@ import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.domain.ImageDownloadState
 import ru.app.incredible.pets.extensions.visible
 import ru.app.incredible.pets.ui.common.BaseScreen
+import kotlin.math.hypot
 
 class PetsScreen : BaseScreen<PetsPm>() {
 
-    override val screenLayout = R.layout.pets_screen
+    override val screenLayout = R.layout.screen_pets
 
     override fun providePresentationModel(): PetsPm = getKoin().get()
 
@@ -45,14 +52,14 @@ class PetsScreen : BaseScreen<PetsPm>() {
             true
         }
 
-        pm.imageDownloadStatus bindTo {
+        pm.imageDownloadStatus bindTo { downloadState ->
             view?.toolbar?.menu?.findItem(R.id.downloadImage)?.isVisible =
-                it == ImageDownloadState.IDLE && it != ImageDownloadState.PROGRESS
+                downloadState == ImageDownloadState.IDLE && downloadState != ImageDownloadState.PROGRESS
 
             view?.toolbar?.menu?.findItem(R.id.removeImage)?.isVisible =
-                it == ImageDownloadState.FINISHED
+                downloadState == ImageDownloadState.FINISHED
 
-            progressDownloadImage.visible(it == ImageDownloadState.PROGRESS)
+            progressDownloadImage.visible(downloadState == ImageDownloadState.PROGRESS)
         }
 
         pm.progress bindTo progressPet.visibility()
@@ -63,7 +70,6 @@ class PetsScreen : BaseScreen<PetsPm>() {
         pm.dogImageUrl bindTo {
             Glide.with(this)
                 .load(it)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(petImage)
         }
 

@@ -32,7 +32,7 @@ abstract class BaseScreen<PM : BasePm> : PmFragment<PM>(), BackButtonHandler {
     @CallSuper
     override fun onBindPresentationModel(pm: PM) {
         pm.loadingErrorDialog bindTo { message, _ ->
-            AlertDialog.Builder(view!!.context)
+            AlertDialog.Builder(requireContext())
                 .setMessage(message)
                 .setPositiveButton(R.string.close, null)
                 .create()

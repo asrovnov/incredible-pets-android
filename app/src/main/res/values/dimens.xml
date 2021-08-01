@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Common -->
+    <dimen name="big_gap">32dp</dimen>
+    <dimen name="medium_gap">20dp</dimen>
+    <dimen name="normal_gap">16dp</dimen>
+    <dimen name="small_gap">10dp</dimen>
+    <dimen name="extra_small_gap">5dp</dimen>
+
     <!--Toolbar -->
     <dimen name="toolbar_plus_status_bar_height">81dp</dimen>
     <dimen name="status_bar_height">24dp</dimen>

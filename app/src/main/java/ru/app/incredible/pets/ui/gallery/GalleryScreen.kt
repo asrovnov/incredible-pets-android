@@ -2,9 +2,10 @@ package ru.app.incredible.pets.ui.gallery
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.gallery_screen.*
+import kotlinx.android.synthetic.main.screen_gallery.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import me.dmdev.rxpm.bindTo
+import me.dmdev.rxpm.passTo
 import ru.app.incredible.pets.R
 import org.koin.android.ext.android.getKoin
 import ru.app.incredible.pets.ui.common.BaseScreen
@@ -12,11 +13,13 @@ import ru.app.incredible.pets.ui.gallery.adapter.GalleryAdapter
 
 class GalleryScreen : BaseScreen<GalleryPm>() {
 
-    override val screenLayout = R.layout.gallery_screen
+    override val screenLayout = R.layout.screen_gallery
 
-    private val galleryAdapter = GalleryAdapter {
-        // TODO: Add click item
-    }
+    private val galleryAdapter = GalleryAdapter(
+        imagePetClickListener = { imageId ->
+            imageId passTo presentationModel.openImageClicks
+        }
+    )
 
     override fun providePresentationModel(): GalleryPm = getKoin().get()
 

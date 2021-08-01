@@ -3,7 +3,7 @@ package ru.app.incredible.pets.domain
 import io.reactivex.Observable
 import ru.app.incredible.pets.data.gateway.DownloadImageGateway
 
-class GetDownloadStateInteractor(
+class DownloadStateInteractor(
     private val downloadImageGateway: DownloadImageGateway
 ) {
 
